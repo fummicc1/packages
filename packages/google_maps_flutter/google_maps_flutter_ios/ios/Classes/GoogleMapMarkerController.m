@@ -13,6 +13,8 @@
 
 @end
 
+static (NSDictionary *) googleMapMarkerImageCache = @{};
+
 @implementation FLTGoogleMapMarkerController
 
 - (instancetype)initMarkerWithPosition:(CLLocationCoordinate2D)position
@@ -104,10 +106,19 @@
   if (draggable && draggable != (id)[NSNull null]) {
     [self setDraggable:[draggable boolValue]];
   }
-  NSArray *icon = data[@"icon"];
-  if (icon && icon != (id)[NSNull null]) {
-    UIImage *image = [self extractIconFromData:icon registrar:registrar];
+  NSString *iconKey = data[@"iconKey"];
+  if (iconKey && iconKey != (id)[NSNull null]) {
+    UIImage *image = googleMapMarkerImageCache[iconKey];
     [self setIcon:image];
+  } else {
+    NSArray *icon = data[@"icon"];
+    if (icon && icon != (id)[NSNull null]) {
+      UIImage *image = [self extractIconFromData:icon registrar:registrar];
+      if (iconKey && iconKey != (id)[NSNull null]) {
+        googleMapMarkerImageCache[iconKey] = image;
+      }
+      [self setIcon:image];
+    }
   }
   NSNumber *flat = data[@"flat"];
   if (flat && flat != (id)[NSNull null]) {
