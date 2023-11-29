@@ -106,16 +106,16 @@ static (NSDictionary *) googleMapMarkerImageCache = @{};
   if (draggable && draggable != (id)[NSNull null]) {
     [self setDraggable:[draggable boolValue]];
   }
-  NSString *iconKey = data[@"iconKey"];
-  if (iconKey && iconKey != (id)[NSNull null]) {
-    UIImage *image = googleMapMarkerImageCache[iconKey];
+  NSString *iconCacheKey = data[@"iconCacheKey"];
+  if (iconCacheKey && iconCacheKey != (id)[NSNull null]) {
+    UIImage *image = googleMapMarkerImageCache[iconCacheKey];
     [self setIcon:image];
   } else {
     NSArray *icon = data[@"icon"];
     if (icon && icon != (id)[NSNull null]) {
       UIImage *image = [self extractIconFromData:icon registrar:registrar];
-      if (iconKey && iconKey != (id)[NSNull null]) {
-        googleMapMarkerImageCache[iconKey] = image;
+      if (iconCacheKey && iconCacheKey != (id)[NSNull null]) {
+        googleMapMarkerImageCache[iconCacheKey] = image;
       }
       [self setIcon:image];
     }

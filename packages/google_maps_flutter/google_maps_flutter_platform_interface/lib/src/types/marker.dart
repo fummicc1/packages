@@ -146,6 +146,7 @@ class Marker implements MapsObject<Marker> {
     this.draggable = false,
     this.flat = false,
     this.icon = BitmapDescriptor.defaultMarker,
+    this.iconCacheKey,
     this.infoWindow = InfoWindow.noText,
     this.position = const LatLng(0.0, 0.0),
     this.rotation = 0.0,
@@ -193,6 +194,9 @@ class Marker implements MapsObject<Marker> {
 
   /// A description of the bitmap used to draw the marker icon.
   final BitmapDescriptor icon;
+
+  /// A key to cache UIImage instance for iOS platform.
+  final String? iconCacheKey;
 
   /// A Google Maps InfoWindow.
   ///
