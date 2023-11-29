@@ -240,6 +240,7 @@ class Marker implements MapsObject<Marker> {
     bool? draggableParam,
     bool? flatParam,
     BitmapDescriptor? iconParam,
+    String? iconCacheKeyParam,
     InfoWindow? infoWindowParam,
     LatLng? positionParam,
     double? rotationParam,
@@ -259,6 +260,7 @@ class Marker implements MapsObject<Marker> {
       draggable: draggableParam ?? draggable,
       flat: flatParam ?? flat,
       icon: iconParam ?? icon,
+      iconCacheKey: iconCacheKeyParam ?? iconCacheKey,
       infoWindow: infoWindowParam ?? infoWindow,
       position: positionParam ?? position,
       rotation: rotationParam ?? rotation,
@@ -294,6 +296,7 @@ class Marker implements MapsObject<Marker> {
     addIfPresent('draggable', draggable);
     addIfPresent('flat', flat);
     addIfPresent('icon', icon.toJson());
+    addIfPresent('iconCacheKey', iconCacheKey);
     addIfPresent('infoWindow', infoWindow._toJson());
     addIfPresent('position', position.toJson());
     addIfPresent('rotation', rotation);
@@ -334,7 +337,7 @@ class Marker implements MapsObject<Marker> {
   String toString() {
     return 'Marker{markerId: $markerId, alpha: $alpha, anchor: $anchor, '
         'consumeTapEvents: $consumeTapEvents, draggable: $draggable, flat: $flat, '
-        'icon: $icon, infoWindow: $infoWindow, position: $position, rotation: $rotation, '
+        'icon: $icon, iconCacheKey: $iconCacheKey, infoWindow: $infoWindow, position: $position, rotation: $rotation, '
         'visible: $visible, zIndex: $zIndex, onTap: $onTap, onDragStart: $onDragStart, '
         'onDrag: $onDrag, onDragEnd: $onDragEnd, clusterManagerId: $clusterManagerId}';
   }

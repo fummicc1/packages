@@ -13,7 +13,7 @@
 
 @end
 
-static (NSDictionary *) googleMapMarkerImageCache = @{};
+static NSMutableDictionary *googleMapMarkerImageCache = nil;
 
 @implementation FLTGoogleMapMarkerController
 
@@ -107,17 +107,24 @@ static (NSDictionary *) googleMapMarkerImageCache = @{};
     [self setDraggable:[draggable boolValue]];
   }
   NSString *iconCacheKey = data[@"iconCacheKey"];
-  if (iconCacheKey && iconCacheKey != (id)[NSNull null]) {
+  if (iconCacheKey && iconCacheKey != (id)[NSNull null] && googleMapMarkerImageCache != (id)[NSNull null] && googleMapMarkerImageCache[iconCacheKey]) {
+    printf("cache is used\n");
     UIImage *image = googleMapMarkerImageCache[iconCacheKey];
     [self setIcon:image];
   } else {
     NSArray *icon = data[@"icon"];
     if (icon && icon != (id)[NSNull null]) {
       UIImage *image = [self extractIconFromData:icon registrar:registrar];
-      if (iconCacheKey && iconCacheKey != (id)[NSNull null]) {
-        googleMapMarkerImageCache[iconCacheKey] = image;
-      }
       [self setIcon:image];
+      if (iconCacheKey && iconCacheKey != (id)[NSNull null]) {
+        if (!googleMapMarkerImageCache || googleMapMarkerImageCache == (id)[NSNull null]) {
+          printf("clear googleMapMarkerImageCache\n");
+          googleMapMarkerImageCache = [NSMutableDictionary dictionary];
+        }
+        [googleMapMarkerImageCache setObject:image forKey:iconCacheKey];
+        printf("googleMapMarkerImageCache size: %lu\n", (unsigned long)googleMapMarkerImageCache.count);
+        printf("iconCacheKey: %s\n", [iconCacheKey UTF8String]);
+      }
     }
   }
   NSNumber *flat = data[@"flat"];
