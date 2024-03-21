@@ -281,6 +281,7 @@ static NSMutableDictionary *googleMapMarkerImageCache = nil;
     NSString *identifier = marker[@"markerId"];
     FLTGoogleMapMarkerController *controller = self.markerIdentifierToController[identifier];
     if (!controller) {
+      printf("marker controller is not found. id: %s\n", [identifier UTF8String]);
       continue;
     }
     [controller interpretMarkerOptions:marker registrar:self.registrar];
