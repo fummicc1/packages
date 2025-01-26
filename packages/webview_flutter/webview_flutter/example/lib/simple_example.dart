@@ -7,8 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-void main() => runApp(const MaterialApp(home: WebViewExample()));
-
 class WebViewExample extends StatefulWidget {
   const WebViewExample({super.key});
 
@@ -26,24 +24,11 @@ class _WebViewExampleState extends State<WebViewExample> {
     // #docregion webview_controller
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setJavaScriptCanOpenWindowsAutomatically(false)
       ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
+        NavigationDelegate(),
       )
-      ..loadRequest(Uri.parse('https://flutter.dev'));
+      ..loadFlutterAsset('assets/window_test.html');
     // #enddocregion webview_controller
   }
 
