@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>window.open() Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    button {
+      padding: 12px 24px;
+      margin: 10px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #007AFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0051D5;
+    }
+    button:active {
+      background: #003D99;
+    }
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: white;
+      border-radius: 4px;
+      min-height: 40px;
+    }
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .error {
+      color: #dc3545;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🪟 window.open() Test</h1>
+
+  <div class="test-section">
+    <h2>Test 1: Basic window.open()</h2>
+    <p>This test calls <code>window.open()</code> without user gesture.</p>
+    <button onclick="testBasicWindowOpen()">Test window.open()</button>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: window.open() with URL</h2>
+    <p>Opens Google in a new window automatically.</p>
+    <button onclick="testWindowOpenWithUrl()">Open Google</button>
+    <div class="result" id="result2"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: Automatic Popup on Load</h2>
+    <p>If <code>javaScriptCanOpenWindowsAutomatically</code> is enabled, this will work.</p>
+    <button onclick="testAutomaticPopup()">Trigger Auto Popup</button>
+    <div class="result" id="result3"></div>
+  </div>
+
+  <script>
+    function testBasicWindowOpen() {
+      const resultDiv = document.getElementById('result1');
+      try {
+        const newWindow = window.open('', '_blank', 'width=600,height=400');
+        if (newWindow) {
+          resultDiv.innerHTML = '<span class="success">✓ window.open() succeeded!</span>';
+          newWindow.document.write('<h1>Window opened successfully!</h1><p>javaScriptCanOpenWindowsAutomatically is working.</p>');
+        } else {
+          resultDiv.innerHTML = '<span class="error">✗ window.open() returned null (blocked)</span>';
+        }
+      } catch (e) {
+        resultDiv.innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+      }
+    }
+
+    function testWindowOpenWithUrl() {
+      const resultDiv = document.getElementById('result2');
+      try {
+        const newWindow = window.open('https://www.google.com', '_blank');
+        if (newWindow) {
+          resultDiv.innerHTML = '<span class="success">✓ Opened Google in new window!</span>';
+        } else {
+          resultDiv.innerHTML = '<span class="error">✗ Failed to open (blocked)</span>';
+        }
+      } catch (e) {
+        resultDiv.innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+      }
+    }
+
+    function testAutomaticPopup() {
+      const resultDiv = document.getElementById('result3');
+      // Simulate automatic popup without user gesture
+      setTimeout(() => {
+        try {
+          const popup = window.open('', 'popup', 'width=400,height=300');
+          if (popup) {
+            resultDiv.innerHTML = '<span class="success">✓ Automatic popup succeeded!</span>';
+            popup.document.write('<h2>Auto Popup Success!</h2><p>This popup was triggered automatically.</p>');
+          } else {
+            resultDiv.innerHTML = '<span class="error">✗ Automatic popup blocked</span>';
+          }
+        } catch (e) {
+          resultDiv.innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+      }, 100);
+    }
+
+    // Log initial status
+    console.log('window.open test page loaded');
+    console.log('Testing if window.open is available:', typeof window.open);
+  </script>
+</body>
+</html>
