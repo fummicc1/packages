@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>window.open() Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    button {
+      padding: 12px 24px;
+      margin: 10px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #007AFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0051D5;
+    }
+    button:active {
+      background: #003D99;
+    }
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: white;
+      border-radius: 4px;
+      min-height: 40px;
+    }
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .error {
+      color: #dc3545;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🪟 window.open() Test</h1>
+
+  <div class="test-section">
+    <h2>Test 1: Synchronously open window</h2>
+    <p>This test calls <code>window.open()</code> when user clicks the button.</p>
+    <button onclick="testBasicWindowOpen()">Test window.open()</button>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Asynchronously open window</h2>
+    <p>If <code>javaScriptCanOpenWindowsAutomatically</code> is enabled, this will work.</p>
+    <button onclick="testAsyncWindowOpen()">Trigger async open</button>
+    <div class="result" id="result3"></div>
+  </div>
+
+  <script>
+    function testBasicWindowOpen() {
+      const resultDiv = document.getElementById('result1');
+      try {
+        const newWindow = window.open('https://www.google.com', '_blank');
+        if (newWindow) {
+          resultDiv.innerHTML = '<span class="success">✓ window.open() succeeded!</span>';
+        } else {
+          resultDiv.innerHTML = '<span class="error">✗ window.open() returned null (blocked)</span>';
+        }
+      } catch (e) {
+        resultDiv.innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+      }
+    }
+
+    function testAsyncWindowOpen() {
+      const resultDiv = document.getElementById('result3');
+      // Simulate async window.open without user gesture
+      setTimeout(() => {
+        try {
+          const newWindow = window.open('https://www.google.com', '_blank');
+          if (newWindow) {
+            resultDiv.innerHTML = '<span class="success">✓ Async window.open() succeeded!</span>';
+          } else {
+            resultDiv.innerHTML = '<span class="error">✗ Async window.open() blocked</span>';
+          }
+        } catch (e) {
+          resultDiv.innerHTML = '<span class="error">✗ Error: ' + e.message + '</span>';
+        }
+      }, 5000);
+    }
+
+    // Log initial status
+    console.log('window.open test page loaded');
+    console.log('Testing if window.open is available:', typeof window.open);
+  </script>
+</body>
+</html>
