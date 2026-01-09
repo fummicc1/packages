@@ -61,8 +61,9 @@ class _WindowOpenTestPageState extends State<WindowOpenTestPage> {
   }
 
   Future<void> _loadTestHtml() async {
-    final String htmlContent =
-        await rootBundle.loadString('assets/window_open_test.html');
+    final String htmlContent = await rootBundle.loadString(
+      'assets/window_open_test.html',
+    );
     await _controller.loadHtmlString(htmlContent);
     await _controllerDisabled.loadHtmlString(htmlContent);
   }
@@ -86,15 +87,12 @@ class _WindowOpenTestPageState extends State<WindowOpenTestPage> {
                         padding: const EdgeInsets.all(8),
                         child: Row(
                           children: <Widget>[
-                            const Icon(Icons.check_circle,
-                                color: Colors.green),
+                            const Icon(Icons.check_circle, color: Colors.green),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
                                 'Enabled (javaScriptCanOpenWindowsAutomatically: true)',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
+                                style: Theme.of(context).textTheme.titleSmall
                                     ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -104,7 +102,8 @@ class _WindowOpenTestPageState extends State<WindowOpenTestPage> {
                       Expanded(
                         child: PlatformWebViewWidget(
                           PlatformWebViewWidgetCreationParams(
-                              controller: _controller),
+                            controller: _controller,
+                          ),
                         ).build(context),
                       ),
                     ],
@@ -124,9 +123,7 @@ class _WindowOpenTestPageState extends State<WindowOpenTestPage> {
                             Expanded(
                               child: Text(
                                 'Disabled (javaScriptCanOpenWindowsAutomatically: false)',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
+                                style: Theme.of(context).textTheme.titleSmall
                                     ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -136,7 +133,8 @@ class _WindowOpenTestPageState extends State<WindowOpenTestPage> {
                       Expanded(
                         child: PlatformWebViewWidget(
                           PlatformWebViewWidgetCreationParams(
-                              controller: _controllerDisabled),
+                            controller: _controllerDisabled,
+                          ),
                         ).build(context),
                       ),
                     ],
@@ -149,8 +147,10 @@ class _WindowOpenTestPageState extends State<WindowOpenTestPage> {
 }
 
 void main() {
-  runApp(const MaterialApp(
-    home: WindowOpenTestPage(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(
+    const MaterialApp(
+      home: WindowOpenTestPage(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
