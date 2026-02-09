@@ -161,7 +161,7 @@ class WebKitWebViewControllerCreationParams
   /// - iOS: `false`
   /// - macOS: `true`
   ///
-  /// See https://developer.apple.com/documentation/webkit/wkpreferences/1536573-javascriptcanopenwindowsautomati
+  /// See [official documentation](https://developer.apple.com/documentation/webkit/wkpreferences/javascriptcanopenwindowsautomatically)
   final bool? javaScriptCanOpenWindowsAutomatically;
 }
 

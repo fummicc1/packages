@@ -35,3 +35,4 @@ flutter:
     - assets/www/styles/style.css
     # Test certificate used to create a test native `SecTrust`.
     - assets/test_cert.der
+    - assets/window_open_test.html
